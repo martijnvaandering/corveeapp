@@ -8,7 +8,7 @@
     <h1>Dit is de super vette Corvee app!</h1>
     <p>Huidige gebruikers:</p>
     <ul id="gebruikers"></ul>
-    <input type="text" name="Naam" value=""  placeholder="Voer hier je nieuwe huisgenoot toe." />
+    <input type="text" name="Naam" value="" placeholder="Voer hier je nieuwe huisgenoot toe." />
     <button onclick="saveUser()">Opslaan</button>
     <script>
         fetch("/api/gebruiker")
@@ -26,10 +26,19 @@
                     Naam: user
                 })
             }).then(a => {
-                    alert("Succesvol opgeslagen!");
-                    window.location.reload();
-                });
+                alert("Succesvol opgeslagen!");
+                window.location.reload();
+            });
         }
+    </script>
+
+
+    <script>
+        fetch("/api/gebruiker")
+            .then(a => a.json())
+            .then(a => console.table(a));
+
+     
     </script>
 </body>
 </html>

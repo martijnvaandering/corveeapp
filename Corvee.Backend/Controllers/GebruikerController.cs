@@ -15,12 +15,17 @@ namespace Corvee.Backend.Controllers
             connection.Open();
             var cmd = connection.CreateCommand();
             cmd.CommandText = "select Naam from Gebruiker";
+
+            var output = new List<string>();
             using (MySqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    yield return reader.GetString(0);
+                    var naam = reader.GetString(0);
+                    output.Add(naam);
                 }
+
+                return output;
             }
         }
 
@@ -30,7 +35,7 @@ namespace Corvee.Backend.Controllers
             MySqlConnection connection = new MySqlConnection("Server=mysql;Database=corvee_app;Uid=root;Pwd=DitIsEchtEenSuperVeiligWachtwoord;");
             connection.Open();
             var cmd = connection.CreateCommand();
-            cmd.CommandText = "INSERT into Gebruiker (Naam) VALUES (\"" + gebruiker.Naam + "\")";
+            cmd.CommandText = "INSERT into Gebruiker (Naam) VALUES (\"" + gebruiker.Naam + "\")"; //TODO: SQL injection nog fixen
             cmd.ExecuteNonQuery();
 
             return new OkResult();
